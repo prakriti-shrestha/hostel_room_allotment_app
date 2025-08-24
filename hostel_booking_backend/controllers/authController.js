@@ -5,14 +5,30 @@ const jwt = require('jsonwebtoken');
 exports.register = (req, res) => {
     const {user_name, email, password, user_role, student_rank} = req.body;
 
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-        if(err) return res.status(500).json({error:err});
-    
-        const newUser = {user_name, email, password_hash: hashedPassword, user_role, student_rank};
+    if(!user_name || !email || !password || !user_role) {
+        return res.status(400).json({error: 'name, email, password, role are required'});
+    }
 
-        User.create(newUser, (err, results) => {
-            if (err) return res.status(500).json({error:err});
-            res.status(201).json({message: 'User registered', userId: results.insertId});
+    const validRoles = ['admin', 'student'];
+    if(!validRoles.includes(user_role)) {
+        return res.status(400).json({error: 'Invalid role'});
+    }
+    if(user_role === 'student' && (student_rank === undefined ||student_rank === null)) {
+        return res.status(400).json({error: 'student_rank is required for students'});
+    }
+
+    User.getByEmail(email, (err, existing) => {
+        if(err) return res.status(500).json({error:err});
+        if(existing.length) return res.status(400).json({error:'Email already registered'});
+        bcrypt.hash(password, 10, (err, hashedPassword) => {
+            if(err) return res.status(500).json({error:err});
+        
+            const newUser = {user_name, email, password_hash: hashedPassword, user_role, student_rank};
+
+            User.create(newUser, (err, results) => {
+                if (err) return res.status(500).json({error:err});
+                res.status(201).json({message: 'User registered', userId: results.insertId});
+            });
         });
     });
 };
