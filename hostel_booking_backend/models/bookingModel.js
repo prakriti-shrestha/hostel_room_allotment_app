@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const getQueryRunner = (connection) => connection || db;
 
 const Booking = {
     getAll: (callback) => {
@@ -17,8 +18,9 @@ const Booking = {
             WHERE b.booking_id = ?`;
         db.query(sql, [id], callback);
     },
-    create: (userData, callback) => {
-        db.query('INSERT INTO bookings SET ?', userData, callback);
+    create: (userData, connection, callback) => {
+        const queryRunner = getQueryRunner(connection);
+        queryRunner.query('INSERT INTO bookings SET ?', userData, callback);
     }
 };
 

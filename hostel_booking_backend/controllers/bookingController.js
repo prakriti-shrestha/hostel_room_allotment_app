@@ -1,4 +1,5 @@
 const Booking = require('../models/bookingModel');
+const Room = require('../models/hostelModel');
 const db = require('../config/db');
 
 exports.register = (req, res) => {
@@ -11,28 +12,50 @@ exports.register = (req, res) => {
     db.getConnection((err, conn) => {
         if(err) return res.status(500).json({error: err});
         conn.beginTransaction(err => {
-            if(err) return res.status(500).json({error:err});
-            conn.query('SELECT * FROM rooms WHERE room_id = ? FOR UPDATE', [room_id], (err, rows) => {
-                if(err) return conn.rollback(() => res.status(500).json({error: err}));
+            if(err) {
+                conn.release();
+                return res.status(500).json({error:err});
+            }
+            Room.getByIdForUpdate(room_id, conn, (err, rows) => {
+                if(err) return conn.rollback(() => {
+                    conn.release();
+                    res.status(500).json({error: err})
+                });
                 if(!rows.length) {
-                    return conn.rollback(() => res.status(404).json({error: 'Room not found'}));
+                    return conn.rollback(() => {
+                        conn.release(); 
+                        res.status(404).json({error: 'Room not found'})
+                    });
                 }
                 
                 const room = rows[0];
                 if(room.beds_available <= 0) {
-                    return res.status(400).json({error: 'No beds available in this room'});
+                    return conn.rollback(() => {
+                        conn.release(); 
+                        res.status(400).json({error: 'No beds available in this room'});
+                    });
                 }
 
                 const now = new Date();
                 const newBooking = {room_id, booked_at: now, booked_by};
 
-                conn.query('INSERT INTO bookings SET ?', newBooking, (err, results) => {
-                    if (err) return conn.rollback(() => res.status(500).json({error:err}));
-                    conn.query('UPDATE rooms SET beds_available = beds_available - 1 WHERE room_id = ?', [room_id], (err2) => {
-                        if (err2) return conn.rollback(() => res.status(500).json({ error: err2 }));
+                Booking.create(newBooking, conn, (err, results) => {
+                    if (err) return conn.rollback(() => {
+                        conn.release();
+                        res.status(500).json({error:err});
+                    });
+                    Room.decrementBeds(room_id, conn, (err2) => {
+                        if (err2) return conn.rollback(() => {
+                            conn.release(); 
+                            res.status(500).json({ error: err2 });
+                        });
 
                         conn.commit(err3 => {
-                            if (err3) return conn.rollback(() => res.status(500).json({ error: err3 }));
+                            if (err3) return conn.rollback(() => {
+                                conn.release(); 
+                                res.status(500).json({ error: err3 })
+                            });
+                            conn.release();
                             res.status(201).json({ message: 'Booking registered', bookingId: results.insertId });
                         });
                     });

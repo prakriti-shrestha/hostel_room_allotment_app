@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const getQueryRunner = (connection) => connection || db;
 
 const Room = {
     getAll: (callback) => {
@@ -10,8 +11,13 @@ const Room = {
     create: (userData, callback) => {
         db.query('INSERT INTO rooms SET ?', userData, callback);
     },
-    updateBeds: (roomId, newAvailable, callback) => {
-        db.query('UPDATE rooms SET beds_available = ? WHERE room_id = ?', [newAvailable, roomId], callback);
+    getByIdForUpdate: (id, connection, callback) => {
+        const queryRunner = getQueryRunner(connection);
+        queryRunner.query('SELECT * FROM rooms WHERE room_id = ? FOR UPDATE', [id], callback);
+    },
+    decrementBeds: (id, connection, callback) => {
+        const queryRunner = getQueryRunner(connection);
+        queryRunner.query('UPDATE rooms SET beds_available = beds_available - 1 WHERE room_id = ?', [id], callback);
     }
 };
 
