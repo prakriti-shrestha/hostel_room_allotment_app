@@ -1,3 +1,48 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+hostel_booking_frontend/**/doc/api/
+hostel_booking_frontend/**/ios/Flutter/.last_build_id
+hostel_booking_frontend/.dart_tool/
+hostel_booking_frontend/.flutter-plugins
+hostel_booking_frontend/.flutter-plugins-dependencies
+hostel_booking_frontend/.pub-cache/
+hostel_booking_frontend/.pub/
+hostel_booking_frontend/build/
+
+# Symbolication related
+hostel_booking_frontend/app.*.symbols
+
+# Obfuscation related
+hostel_booking_frontend/app.*.map.json
+
+# Android Studio will place build artifacts here
+hostel_booking_frontend/android/app/debug
+hostel_booking_frontend/android/app/profile
+hostel_booking_frontend/android/app/release
 
 # Node.js
 hostel_booking_backend/node_modules/
