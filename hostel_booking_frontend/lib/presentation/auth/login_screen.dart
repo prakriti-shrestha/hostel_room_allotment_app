@@ -23,19 +23,16 @@ class LoginScreen extends StatelessWidget {
               if (state.user.role == "admin") {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => AdminHomeScreen(name: state.user.name),
-                  ),
+                  MaterialPageRoute(builder: (context) => AdminHomeScreen()),
                 );
-              } else if (state.user.role == "student") {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => StudentHomeScreen(name: state.user.name),
-                  ),
-                );
+                // } else if (state.user.role == "student") {
+                //   Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder:
+                //           (context) => StudentHomeScreen(name: state.user.name),
+                //     ),
+                //   );
               }
             } else if (state is AuthFailure) {
               ScaffoldMessenger.of(
