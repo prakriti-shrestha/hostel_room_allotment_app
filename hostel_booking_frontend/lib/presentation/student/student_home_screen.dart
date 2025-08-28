@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
 import 'package:hostel_booking_frontend/presentation/customs/dashboard_button.dart';
+import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
 import 'package:hostel_booking_frontend/presentation/constants/constants.dart';
-import 'package:hostel_booking_frontend/presentation/admin/student_management_screen.dart';
 
-class AdminHomeScreen extends StatelessWidget {
+class StudentHomeScreen extends StatelessWidget {
   final String name;
 
-  const AdminHomeScreen({super.key, required this.name});
+  const StudentHomeScreen({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(title: "Admin Dashboard"),
+      extendBodyBehindAppBar:
+          true, // Allows body to go behind a transparent app bar
+      appBar: CustomAppBar(title: "Student Dashboard"),
       body: Container(
         decoration: Constants.buildBackgroundDecoration(),
         child: SafeArea(
@@ -21,10 +21,9 @@ class AdminHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildWelcomeHeader(),
-                const SizedBox(height: 40),
+                const SizedBox(height: 50),
                 ..._buildDashboardButtons(context),
               ],
             ),
@@ -36,22 +35,22 @@ class AdminHomeScreen extends StatelessWidget {
 
   Widget _buildWelcomeHeader() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(
-          Icons.admin_panel_settings_rounded,
-          size: 60,
-          color: Colors.white70,
+        const CircleAvatar(
+          radius: 40,
+          backgroundColor: Colors.white70,
+          child: Icon(Icons.school_rounded, size: 50, color: Color(0xFF6A82FB)),
         ),
         const SizedBox(height: 16),
         Text(
-          "Welcome back,",
-          style: TextStyle(fontSize: 24, color: Colors.white.withOpacity(0.8)),
+          "Welcome,",
+          style: TextStyle(fontSize: 26, color: Colors.white.withOpacity(0.9)),
         ),
         Text(
           name,
           style: const TextStyle(
-            fontSize: 32,
+            fontSize: 34,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -63,33 +62,29 @@ class AdminHomeScreen extends StatelessWidget {
   List<Widget> _buildDashboardButtons(BuildContext context) {
     return [
       DashboardButton(
-        icon: Icons.meeting_room,
-        label: "Manage Rooms",
+        icon: Icons.hotel,
+        label: "Book a Room",
         onPressed: () {
-          // TODO: Navigate to Manage Rooms screen
-          print("Navigate to Manage Rooms");
+          // TODO: Navigate to Room Booking screen
+          print("Navigating to Book a Room...");
         },
       ),
       const SizedBox(height: 20),
       DashboardButton(
-        icon: Icons.people,
-        label: "View Students",
+        icon: Icons.assignment_ind,
+        label: "My Room Allocation",
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const StudentManagementScreen(),
-            ),
-          );
+          // TODO: Navigate to My Allocation screen
+          print("Navigating to My Room Allocation...");
         },
       ),
       const SizedBox(height: 20),
       DashboardButton(
-        icon: Icons.assignment_turned_in,
-        label: "Room Allotment",
+        icon: Icons.person,
+        label: "My Profile",
         onPressed: () {
-          // TODO: Navigate to Allotment screen
-          print("Navigate to Room Allotment");
+          // TODO: Navigate to Profile/Details screen
+          print("Navigating to My Profile...");
         },
       ),
     ];
