@@ -14,12 +14,7 @@ class RoomProvider {
     final response = await http.get(Uri.parse(baseUrl), headers: headers);
 
     if (response.statusCode == 200) {
-      final List<dynamic> roomListJson = jsonDecode(response.body);
-      return roomListJson.map((json) => Room.fromJson(json)).toList();
-    } else if (response.statusCode == 401 || response.statusCode == 403) {
-      throw Exception(
-        'Authorization failed. You are not permitted to perform this action.',
-      );
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load rooms.');
     }

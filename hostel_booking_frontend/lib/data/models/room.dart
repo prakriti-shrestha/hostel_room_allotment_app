@@ -43,7 +43,8 @@ class Room {
       "room_number": roomNumber,
       "type": type,
       "beds_total": bedsTotal,
-      "occupied": occupied,
+      // "occupied": occupied,
+      "beds_available": bedsAvailable,
       "apartment": isApartment ? 1 : 0,
       "nationality_restriction": nationalityRestriction,
     };
