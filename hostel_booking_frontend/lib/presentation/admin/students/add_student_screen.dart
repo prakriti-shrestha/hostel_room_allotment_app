@@ -36,7 +36,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
           name: _nameController.text,
           email: _emailController.text,
           password: _passwordController.text,
-          role: 'student', // Role is fixed
+          role: 'student',
           studentRank: int.tryParse(_rankController.text),
         ),
       );

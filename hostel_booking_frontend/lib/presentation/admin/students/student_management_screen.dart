@@ -4,7 +4,7 @@ import 'package:hostel_booking_frontend/data/models/user.dart';
 import 'package:hostel_booking_frontend/logic/auth_bloc/auth_bloc.dart';
 import 'package:hostel_booking_frontend/logic/auth_bloc/auth_event.dart';
 import 'package:hostel_booking_frontend/logic/auth_bloc/auth_state.dart';
-import 'package:hostel_booking_frontend/presentation/admin/add_student_screen.dart';
+import 'package:hostel_booking_frontend/presentation/admin/students/add_student_screen.dart';
 import 'package:hostel_booking_frontend/presentation/constants/constants.dart';
 import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
 import 'package:hostel_booking_frontend/presentation/customs/dashboard_button.dart';

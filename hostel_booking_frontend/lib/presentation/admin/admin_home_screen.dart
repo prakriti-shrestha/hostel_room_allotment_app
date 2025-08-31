@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
 import 'package:hostel_booking_frontend/presentation/customs/dashboard_button.dart';
 import 'package:hostel_booking_frontend/presentation/constants/constants.dart';
-import 'package:hostel_booking_frontend/presentation/admin/student_management_screen.dart';
+import 'package:hostel_booking_frontend/presentation/admin/students/student_management_screen.dart';
+import 'package:hostel_booking_frontend/presentation/admin/rooms/room_management_screen.dart';
+import 'package:hostel_booking_frontend/presentation/admin/bookings/booking_management_screen.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   final String name;
@@ -66,8 +68,12 @@ class AdminHomeScreen extends StatelessWidget {
         icon: Icons.meeting_room,
         label: "Manage Rooms",
         onPressed: () {
-          // TODO: Navigate to Manage Rooms screen
-          print("Navigate to Manage Rooms");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const RoomManagementScreen(),
+            ),
+          );
         },
       ),
       const SizedBox(height: 20),
@@ -88,8 +94,10 @@ class AdminHomeScreen extends StatelessWidget {
         icon: Icons.assignment_turned_in,
         label: "Room Allotment",
         onPressed: () {
-          // TODO: Navigate to Allotment screen
-          print("Navigate to Room Allotment");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ViewBookingsScreen()),
+          );
         },
       ),
     ];
