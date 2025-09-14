@@ -60,7 +60,7 @@ class BookingProviders {
     };
 
     final response = await http.post(
-      Uri.parse(baseUrl),
+      Uri.parse('$baseUrl/register'),
       headers: headers,
       body: jsonEncode(body),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hostel_booking_frontend/presentation/customs/dashboard_button.dart';
 import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
 import 'package:hostel_booking_frontend/presentation/constants/constants.dart';
+import 'package:hostel_booking_frontend/presentation/student/rooms/room_preference_screen.dart';
 
 class StudentHomeScreen extends StatelessWidget {
   final String name;
@@ -65,8 +66,12 @@ class StudentHomeScreen extends StatelessWidget {
         icon: Icons.hotel,
         label: "Book a Room",
         onPressed: () {
-          // TODO: Navigate to Room Booking screen
-          print("Navigating to Book a Room...");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const RoomPreferenceScreen(),
+            ),
+          );
         },
       ),
       const SizedBox(height: 20),
