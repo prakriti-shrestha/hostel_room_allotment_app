@@ -78,6 +78,34 @@ exports.userLogin = (req, res) => {
                 return res.status(401).json({error: 'Invalid email or password'});
             }
 
+            if (user.user_role === 'student') {
+                const currentTime = new Date();
+                const bookingStartTime = new Date(); // You'll set the official start time of booking here
+                bookingStartTime.setHours(9, 0, 0, 0); // Example: Booking starts at 9:00 AM
+
+                const groupSize = 10;
+                const slotDurationMinutes = 10;
+
+                // Calculate the slot index for the current student
+                const slotIndex = Math.floor((user.student_rank - 1) / groupSize);
+
+                // Calculate the student's specific allowed time slot
+                const allowedStartTime = new Date(bookingStartTime.getTime() + slotIndex * slotDurationMinutes * 60000);
+                const allowedEndTime = new Date(allowedStartTime.getTime() + slotDurationMinutes * 60000);
+
+                // Check if the current time is within the student's allowed slot
+                const isAllowed = currentTime >= allowedStartTime && currentTime < allowedEndTime;
+
+                if (!isAllowed) {
+                    const formattedStartTime = allowedStartTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                    const formattedEndTime = allowedEndTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                    return res.status(403).json({
+                        error: `It's not your turn to book yet. Your booking window is from ${formattedStartTime} to ${formattedEndTime}.`
+                    });
+                }
+            }
+
             const token = jwt.sign(
                 {userId: user.user_id, role: user.user_role},
                 process.env.JWT_SECRET,

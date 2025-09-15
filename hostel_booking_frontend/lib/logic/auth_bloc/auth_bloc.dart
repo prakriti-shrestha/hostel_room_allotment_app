@@ -16,14 +16,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         emit(AuthSuccess(user: user, token: token));
       } catch (e) {
-        String errorMessage = e.toString();
-        if (errorMessage.contains("401") ||
-            errorMessage.toLowerCase().contains("invalid credentials") ||
-            errorMessage.toLowerCase().contains("user not found")) {
-          emit(AuthFailure("Email or password did not match."));
-        } else {
-          emit(AuthFailure("An unexpected error occurred. Please try again."));
-        }
+        emit(AuthFailure(e.toString().replaceFirst('Exception: ', '')));
+        // String errorMessage = e.toString();
+        // if (errorMessage.contains("401") ||
+        //     errorMessage.toLowerCase().contains("invalid credentials") ||
+        //     errorMessage.toLowerCase().contains("user not found")) {
+        //   emit(AuthFailure("Email or password did not match."));
+        // } else {
+        //   emit(AuthFailure("An unexpected error occurred. Please try again."));
+        // }
       }
     });
 
