@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hostel_booking_frontend/data/models/room.dart';
 
 abstract class BookingEvent extends Equatable {
   const BookingEvent();
@@ -26,11 +27,13 @@ class AddBookingRequested extends BookingEvent {
   final int bookedBy;
   final DateTime bookedAt;
   final String token;
+  final Room roomToBook;
 
   const AddBookingRequested({
     required this.roomId,
     required this.bookedBy,
     required this.bookedAt,
     required this.token,
+    required this.roomToBook,
   });
 }

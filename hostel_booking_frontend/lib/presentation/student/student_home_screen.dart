@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hostel_booking_frontend/presentation/customs/dashboard_button.dart';
 import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
 import 'package:hostel_booking_frontend/presentation/constants/constants.dart';
+import 'package:hostel_booking_frontend/presentation/student/rooms/my_room_allocation_screen.dart';
 import 'package:hostel_booking_frontend/presentation/student/rooms/room_preference_screen.dart';
 
 class StudentHomeScreen extends StatelessWidget {
@@ -79,8 +80,9 @@ class StudentHomeScreen extends StatelessWidget {
         icon: Icons.assignment_ind,
         label: "My Room Allocation",
         onPressed: () {
-          // TODO: Navigate to My Allocation screen
-          print("Navigating to My Room Allocation...");
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => MyRoomAllocationScreen()),
+          );
         },
       ),
       const SizedBox(height: 20),

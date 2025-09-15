@@ -11,6 +11,7 @@ import 'package:hostel_booking_frontend/logic/auth_bloc/auth_bloc.dart';
 import 'package:hostel_booking_frontend/logic/auth_bloc/auth_state.dart';
 import 'package:hostel_booking_frontend/presentation/constants/constants.dart';
 import 'package:hostel_booking_frontend/presentation/customs/app_bar.dart';
+import 'package:hostel_booking_frontend/presentation/student/rooms/my_room_allocation_screen.dart';
 
 // Converted to a StatefulWidget to use initState
 class AvailableRoomsScreen extends StatefulWidget {
@@ -71,7 +72,15 @@ class _AvailableRoomsScreenState extends State<AvailableRoomsScreen> {
                         backgroundColor: Colors.green,
                       ),
                     );
-                    Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder:
+                            (context) => MyRoomAllocationScreen(
+                              bookedRoom: state.bookedRoom,
+                            ),
+                      ),
+                      (Route<dynamic> route) => false,
+                    );
                   }
                   if (state is BookingFailure) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -232,6 +241,7 @@ class _AvailableRoomsScreenState extends State<AvailableRoomsScreen> {
                     bookedBy: userId,
                     bookedAt: DateTime.now(),
                     token: token,
+                    roomToBook: room,
                   ),
                 );
                 Navigator.of(dialogContext).pop();
