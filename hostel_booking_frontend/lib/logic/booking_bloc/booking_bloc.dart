@@ -42,7 +42,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
           bookedAt: event.bookedAt,
           token: event.token,
         );
-        emit(BookingAddSuccess());
+        emit(BookingAddSuccess(bookedRoom: event.roomToBook));
       } catch (e) {
         emit(BookingFailure(error: e.toString()));
       }
